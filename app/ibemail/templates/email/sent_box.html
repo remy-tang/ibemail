@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8 text-center">
+            <h1 class="mt-4">{% block title %}Messages envoyés{% endblock %}</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-5 text-center">
+            <a class="btn btn-primary me-2" href="{{ url_for('email.compose') }}">Écrire un nouvel email</a>
+            <a href="{{ url_for('email.inbox') }}" class="btn btn-secondary">Retour à la boîte de réception</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+
+            {% if sent_emails %}
+            <ul class="list-group my-4 shadow-sm">
+                {% for email in sent_emails %}
+                <li class="list-group-item py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">
+                                <a href="{{ url_for('email.view_email', email_id=email.id) }}" class="text-dark">{{
+                                    email['subject'] }}</a>
+                            </h5>
+                            <p class="mb-1 text-muted">À: {{ email['recipient'] }}</p>
+                        </div>
+                        <small class="text-muted">{{ email['timestamp'] }}</small>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="alert alert-info mt-4" role="alert">
+                Pas d'e-mail à afficher. Cliquez sur "Écrire un nouvel email" pour peupler cette page!
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

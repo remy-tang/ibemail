@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/"]
+
+[project]
+name = "ibe_pesto"
+version = "0.1"
+authors = [
+  { name="Rémy Tang", email="remy.tang@mines.org" },
+  { name="Rodrigue Lazarus", email="rodrigue.lazarus@mines.org" },
+]
+description = "Implémentation d'une messagerie basée sur l'IBE pour le PESTO cybersécurité 2024."
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://gitlab.telecom-paris.fr/mc/pesto-2024/"

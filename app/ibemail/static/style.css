@@ -1,0 +1,74 @@
+body {
+    background: #e8f1f9;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background-color: #007bff;
+    padding: 1rem;
+}
+
+nav h1 {
+    color: white;
+    display: inline;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    display: inline;
+    float: right;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.content {
+    padding: 20px;
+}
+
+.flash {
+    background-color: #ffdfdf;
+    color: #a94442;
+    border: 1px solid #a94442;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+/* Background styling for the email list container */
+.email-list {
+    border-top: 1px solid #dee2e6;
+}
+
+/* Styling for each email item */
+.email-item {
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #495057;
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect for email items */
+.email-item:hover {
+    background-color: #e9ecef;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Optional: rounded corners for the email list */
+.email-list {
+    border-radius: 0.25rem;
+}

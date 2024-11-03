@@ -1,0 +1,27 @@
+name: pesto-crypto
+channels:
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pycryptodome
+  - ca-certificates
+  - openssl
+  - ipykernel
+  - sage
+  - python-dotenv
+  - certifi
+  - cryptography
+  - aiosmtpd
+  - m2crypto
+  - omegaconf
+  - tqdm
+  - flask
+  - flask-wtf
+  - bootstrap-flask
+  - flask-login
+  - flask-sqlalchemy
+  - email_validator
+  - gunicorn
+  - gdb
+  - waitress
+  - flask-mail

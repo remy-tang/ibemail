@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block header %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8 text-center">
+      <h1 class="mt-4">{% block title %}Écrire un nouvel email{% endblock %}</h1>
+      {% if current_user.is_authenticated %}
+      <a class="btn btn-secondary mt-2" href="{{ url_for('email.inbox') }}">Revenir à la boîte de réception</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <div class="card shadow mt-4">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">Nouveau message</h2>
+          {{ render_form(form, form_type="horizontal", button_map={'submit': 'primary'}) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8 text-center">
+      <h1 class="mt-4">{{ email.subject }}</h1>
+      <p class="text-muted">De: {{ email.sender }}</p>
+      <p class="text-muted">{{ email.timestamp }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+
+      <!-- Encryption Notification Banner -->
+      <div id="email-alert-encrypted" class="alert alert-info text-center" role="alert">
+        Ce message a été chiffré par identity-based encryption.
+      </div>
+
+      <div class="card shadow-sm p-4">
+        <!-- Original Encrypted Content -->
+        <p id="email-body-encrypted" class="body">{{email.encrypted_body}}</p>
+        <!-- Placeholder for Decrypted Content, initially hidden -->
+        <p id="email-body-decrypted" class="body" style="display: none;"></p>
+      </div>
+
+      <!-- Decrypt and View Original Buttons -->
+      <button id="decrypt-button" class="btn btn-primary mt-3">
+        <span id="decrypt-text">Déchiffrer le message</span>
+        <span id="decrypt-spinner" class="spinner-border spinner-border-sm" style="display: none;" role="status"
+          aria-hidden="true"></span>
+      </button>
+
+      <button id="view-original-button" class="btn btn-secondary mt-3" style="display: none;">Voir l'original</button>
+
+      <div class="mt-3">
+        <a href="{{ url_for('email.inbox') }}" class="btn btn-secondary">Retour à la boîte de réception</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('decrypt-button').addEventListener('click', function () {
+    // Show spinner and change button text
+    document.getElementById('decrypt-spinner').style.display = 'inline-block';
+    document.getElementById('decrypt-text').textContent = 'Déchiffrement en cours...';
+    document.getElementById('decrypt-button').disabled = true;
+
+    fetch(`{{ url_for('email.decrypt_email', email_id=email.id) }}`)
+      .then(response => response.json())
+      .then(data => {
+        // Show decrypted content, hide original encrypted content
+        document.getElementById('email-body-decrypted').textContent = data.decrypted_body;
+        document.getElementById('email-body-decrypted').style.display = 'block';
+        document.getElementById('email-body-encrypted').style.display = 'none';
+
+        // Hide decrypt button and show "View Original" button
+        document.getElementById('decrypt-button').style.display = 'none';
+        document.getElementById('view-original-button').style.display = 'inline-block';
+
+        // Change alert banner to indicate decryption success
+        document.getElementById('email-alert-encrypted').textContent = "Ce message a été déchiffré avec l'identité: {{current_user_email}}.";
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('decrypt-spinner').style.display = 'none';
+        document.getElementById('decrypt-text').textContent = 'Déchiffrer le message';
+        document.getElementById('decrypt-button').disabled = false;
+      });
+  });
+
+  document.getElementById('view-original-button').addEventListener('click', function () {
+    // Toggle visibility between decrypted and original content
+    const decrypted = document.getElementById('email-body-decrypted');
+    const encrypted = document.getElementById('email-body-encrypted');
+
+    if (decrypted.style.display === 'block') {
+      decrypted.style.display = 'none';
+      encrypted.style.display = 'block';
+      document.getElementById('view-original-button').textContent = 'Voir le message déchiffré';
+      document.getElementById('email-alert-encrypted').textContent = "Ce message a été chiffré par identity-based encryption.";
+    } else {
+      decrypted.style.display = 'block';
+      encrypted.style.display = 'none';
+      document.getElementById('view-original-button').textContent = "Voir l'original";
+      document.getElementById('email-alert-encrypted').textContent = "Ce message a été déchiffré avec l'identité : {{current_user_email}}.";
+    }
+  });
+</script>
+{% endblock %}

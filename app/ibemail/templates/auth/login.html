@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5 mt-5">
+      
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h1 class="card-title text-center mb-4">Connexion</h1>
+          <!-- Render the login form, with an id for JavaScript targeting -->
+          {{ render_form(form, form_type="floating", button_map={'submit': 'primary'}, id="login-form") }}
+          <div class="text-center mt-3">
+            <a href="{{ url_for('auth.register') }}">Pas de compte? Inscrivez-vous ici</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Styled List of Available Emails -->
+      <div class="card shadow mt-4">
+        <div class="card-body">
+          <h5 class="card-title text-center">Comptes enregistrés</h5>
+          <ul class="list-group list-group-flush email-list">
+            {% for email in available_emails %}
+            <!-- Add data-email attribute to store the email address -->
+            <li class="list-group-item email-item" data-email="{{ email }}">{{ email }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript to handle the click and auto-fill the form -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const emailItems = document.querySelectorAll('.email-item');
+
+    emailItems.forEach(item => {
+      item.addEventListener('click', function () {
+        const selectedEmail = this.getAttribute('data-email');
+
+        // Auto-fill the email input in the login form
+        const emailInput = document.querySelector('#login-form input[name="email"]');
+        if (emailInput) {
+          emailInput.value = selectedEmail;
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}
