@@ -1,25 +1,36 @@
+[tool.poetry]
+name = "ibemail"
+version = "1.0"
+description = "Implémentation d'une messagerie basée sur l'IBE pour le PESTO cybersécurité 2024."
+authors = [
+    "Remy Tang <remy.tang@mines.org>",
+    "Rodrigue Lazarus <rodrigue.lazarus@mines.org>",
+]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pycryptodome = "^3.21.0"
+ipykernel = "^6.29.5"
+python-dotenv = "^1.0.1"
+certifi = "^2024.8.30"
+cryptography = "^43.0.3"
+aiosmtpd = "^1.4.6"
+omegaconf = "^2.3.0"
+tqdm = "^4.66.6"
+flask = "^3.0.3"
+flask-wtf = "^1.2.2"
+bootstrap-flask = "^2.4.1"
+flask-login = "^0.6.3"
+flask-sqlalchemy = "^3.1.1"
+email-validator = "^2.2.0"
+gunicorn = "^23.0.0"
+waitress = "^3.0.1"
+flask-mail = "^0.10.0"
+
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/"]
-
-[project]
-name = "ibe_pesto"
-version = "0.1"
-authors = [
-  { name="Rémy Tang", email="remy.tang@mines.org" },
-  { name="Rodrigue Lazarus", email="rodrigue.lazarus@mines.org" },
-]
-description = "Implémentation d'une messagerie basée sur l'IBE pour le PESTO cybersécurité 2024."
-readme = "README.md"
-requires-python = ">=3.12"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
-
-[project.urls]
-Homepage = "https://gitlab.telecom-paris.fr/mc/pesto-2024/"
